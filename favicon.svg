@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">SKYBOUND aircraft emblem</title><desc id="d">A stylised aircraft flying upward through a circular horizon.</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#55efff"/><stop offset="1" stop-color="#1688d8"/></linearGradient><linearGradient id="o" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff2b2"/><stop offset="1" stop-color="#ff9d28"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="#071522"/><circle cx="256" cy="256" r="190" fill="none" stroke="url(#g)" stroke-width="18"/><path d="M94 316h324" stroke="#2c6680" stroke-width="12" stroke-linecap="round"/><path d="M256 91l31 151 105 67-7 22-111-31-18 104-18-104-111 31-7-22 105-67z" fill="url(#g)" stroke="#d8fbff" stroke-width="8" stroke-linejoin="round"/><path d="M256 91l31 151 105 67-7 22-111-31-18 104" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="5"/><path d="M130 375h252" stroke="url(#o)" stroke-width="12" stroke-linecap="round"/><circle cx="256" cy="256" r="10" fill="#fff"/>
+</svg>
