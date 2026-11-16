@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vian-max.github.io/Skybound/sitemap.xml
