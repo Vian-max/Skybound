@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>SKYBOUND — Design, Fly &amp; Race Your Own Aircraft</title>
-<meta name="description" content="Draw your own aircraft, engineer its wings and engine, test-fly in a 3D world and race AI pilots in SKYBOUND.">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>SKYBOUND | Aircraft Designer &amp; 3D Flight Racing Game</title>
+<meta name="description" content="Build and customise your own aircraft in SKYBOUND. Draw a plane, tune its wings and engine, fly through a 3D world and race AI pilots for free in your browser.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://vian-max.github.io/Skybound/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SKYBOUND — Design, Fly &amp; Race">
-<meta property="og:description" content="Draw an aircraft, tune its performance, fly a 3D world and race AI pilots.">
+<meta property="og:title" content="SKYBOUND | Design, Fly &amp; Race Your Own Aircraft">
+<meta property="og:description" content="Design your own aircraft, tune its performance, explore a 3D flying world and race AI pilots in this free browser game.">
 <meta property="og:url" content="https://vian-max.github.io/Skybound/">
 <meta name="twitter:card" content="summary">
 <style>
@@ -12,7 +12,7 @@
 *{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:system-ui,Segoe UI,sans-serif;color:var(--tx)}
 #gl{position:fixed;inset:0}
 #ui{position:fixed;left:0;top:0;bottom:0;width:340px;max-width:100%;padding:calc(10px + env(safe-area-inset-top,0px)) 12px 12px;background:linear-gradient(90deg,#08121cf0 70%,#08121c00);overflow:auto}
-h1{margin:0;font-size:22px;letter-spacing:.2em;color:var(--ac)}h1 small{display:block;font-size:10px;letter-spacing:.12em;color:#8fb3c7}
+h1{margin:0;font-size:22px;letter-spacing:.2em;color:var(--ac);display:flex;align-items:center;gap:10px}h1 .brandmark{width:42px;height:42px;object-fit:contain;flex:0 0 42px;filter:drop-shadow(0 0 8px #35e0ff55)}h1 .brandcopy{display:block}h1 small{display:block;font-size:10px;letter-spacing:.12em;color:#8fb3c7;margin-top:3px}
 .act{position:sticky;top:0;background:#08121cf0;padding:6px 0;z-index:2}
 #cv{background:#0e2233;border:1px solid var(--ac);border-radius:8px;touch-action:none;cursor:crosshair;width:300px;height:420px;display:block}
 label{display:block;font-size:12px;margin:6px 0 0;color:#9cc}input[type=range]{width:100%}
@@ -26,6 +26,10 @@ button.go{background:var(--or);color:#210;border-color:var(--or)}
 #big{position:absolute;left:0;right:0;top:22%;text-align:center;font-size:72px;font-weight:800;color:var(--or);text-shadow:0 0 20px #000}
 </style>  <meta name="google-site-verification" content="uxBlUXi4iWHWRIh-Opv8n98FYRAgU1dJRO_kaOFVY6U" />
   <meta name="application-name" content="SKYBOUND">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="logo.svg">
+  <meta name="keywords" content="SKYBOUND, aircraft design game, plane building game, browser flight simulator, 3D flying game, airplane racing game, aircraft creator">
+  <meta name="author" content="SKYBOUND">
   <meta name="theme-color" content="#08121c">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta property="og:site_name" content="SKYBOUND">
@@ -36,14 +40,14 @@ button.go{background:var(--or);color:#210;border-color:var(--or)}
   {
     "@context": "https://schema.org",
     "@graph": [
-      {"@type":"WebSite","@id":"https://vian-max.github.io/Skybound/#website","url":"https://vian-max.github.io/Skybound/","name":"SKYBOUND","description":"A browser-based aircraft design, 3D flight and AI racing game."},
+      {"@type":"WebSite","@id":"https://vian-max.github.io/Skybound/#website","url":"https://vian-max.github.io/Skybound/","name":"SKYBOUND","alternateName":"SKYBOUND Flight Simulator","description":"A browser-based aircraft design, 3D flight and AI racing game."},
       {"@type":"VideoGame","@id":"https://vian-max.github.io/Skybound/#game","name":"SKYBOUND","url":"https://vian-max.github.io/Skybound/","description":"Design an aircraft by drawing its shape, adjust wing span, engine power and wing dihedral, then test-fly in a 3D environment or race AI pilots through checkpoints.","genre":["Aircraft design game","Flight simulator","Air racing game"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any operating system with a modern web browser","inLanguage":"en","isAccessibleForFree":true,"playMode":"SinglePlayer"}
     ]
   }
   </script>
 </head><body>
 <canvas id="gl"></canvas>
-<div id="ui"><h1>SKYBOUND<small>DRAW. ENGINEER. FLY. RACE.</small></h1>
+<div id="ui"><h1><img class="brandmark" src="logo.svg" width="42" height="42" alt="SKYBOUND aircraft logo"><span class="brandcopy">SKYBOUND<small>DESIGN. ENGINEER. FLY. RACE.</small></span></h1>
 <div class="act"><button class="go" id="tf">Test flight</button><button class="go" id="rc">RACE</button><button id="sv">Save</button><button id="ld">Load</button></div>
 <div id="msg"></div>
 <canvas id="cv" width="300" height="420"></canvas>
