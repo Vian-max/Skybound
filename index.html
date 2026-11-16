@@ -25,6 +25,22 @@ button.go{background:var(--or);color:#210;border-color:var(--or)}
 .pn{position:absolute;background:#08121ccc;border:1px solid var(--ac);border-radius:8px;padding:8px 12px;font:600 14px ui-monospace,monospace}
 #big{position:absolute;left:0;right:0;top:22%;text-align:center;font-size:72px;font-weight:800;color:var(--or);text-shadow:0 0 20px #000}
 </style>  <meta name="google-site-verification" content="uxBlUXi4iWHWRIh-Opv8n98FYRAgU1dJRO_kaOFVY6U" />
+  <meta name="application-name" content="SKYBOUND">
+  <meta name="theme-color" content="#08121c">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:site_name" content="SKYBOUND">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:title" content="SKYBOUND – Aircraft Design & Flight Simulator Game">
+  <meta name="twitter:description" content="Draw and customise an aircraft, test-fly it in a 3D world, and race AI pilots in your browser.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {"@type":"WebSite","@id":"https://vian-max.github.io/Skybound/#website","url":"https://vian-max.github.io/Skybound/","name":"SKYBOUND","description":"A browser-based aircraft design, 3D flight and AI racing game."},
+      {"@type":"VideoGame","@id":"https://vian-max.github.io/Skybound/#game","name":"SKYBOUND","url":"https://vian-max.github.io/Skybound/","description":"Design an aircraft by drawing its shape, adjust wing span, engine power and wing dihedral, then test-fly in a 3D environment or race AI pilots through checkpoints.","genre":["Aircraft design game","Flight simulator","Air racing game"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any operating system with a modern web browser","inLanguage":"en","isAccessibleForFree":true,"playMode":"SinglePlayer"}
+    ]
+  }
+  </script>
 </head><body>
 <canvas id="gl"></canvas>
 <div id="ui"><h1>SKYBOUND<small>DRAW. ENGINEER. FLY. RACE.</small></h1>
@@ -37,7 +53,22 @@ button.go{background:var(--or);color:#210;border-color:var(--or)}
 <label>Engine power<input type="range" id="pw" min=".5" max="1.7" step=".05" value="1"></label>
 <label>Wing dihedral<input type="range" id="di" min="0" max=".3" step=".01" value=".05"></label>
 <label>Paint hue<input type="range" id="hu" min="0" max="360" value="200"></label>
-<div id="arch"></div><div id="bars"></div><div id="tip"></div></div>
+<div id="arch"></div><div id="bars"></div><div id="tip"></div><section id="about-skybound" aria-labelledby="about-title" style="margin-top:18px;padding:12px 10px;border:1px solid #28495c;border-radius:8px;background:#091a28;color:#dff4ff;font-size:12px;line-height:1.55">
+<h2 id="about-title" style="font-size:17px;color:#35e0ff;letter-spacing:.04em;margin:0 0 8px">About SKYBOUND</h2>
+<p><strong>SKYBOUND is a browser-based aircraft design and flight simulator game.</strong> Sketch an aircraft, experiment with its proportions and performance settings, then take it into a 3D flying environment. Practise in test flight or compete against AI pilots in checkpoint races.</p>
+<h3 style="font-size:14px;color:#ffb020;margin:12px 0 4px">Design your own aircraft</h3>
+<p>Use the drawing area to shape your aircraft outline. Try the mirror option for a symmetrical design, or start with an example aircraft. Adjust wing span, engine power, wing dihedral and paint hue to explore how your design changes.</p>
+<h3 style="font-size:14px;color:#ffb020;margin:12px 0 4px">Test flight and air racing</h3>
+<p>Choose <strong>Test flight</strong> to practise flying, or choose <strong>Race</strong> to navigate the checkpoint course against computer-controlled pilots. Watch your speed, altitude, throttle and angle of attack in the flight HUD.</p>
+<h3 style="font-size:14px;color:#ffb020;margin:12px 0 4px">Flight controls</h3>
+<ul style="padding-left:18px;margin:4px 0"><li>W / S: pitch</li><li>A / D: turn</li><li>Q / E: roll</li><li>Up / Down: adjust throttle</li><li>Space: boost</li><li>Shift: brake</li><li>C: change camera</li><li>R: reset aircraft</li><li>Esc: return to the workshop</li></ul>
+<h3 style="font-size:14px;color:#ffb020;margin:12px 0 4px">Frequently asked questions</h3>
+<details style="margin:6px 0"><summary style="cursor:pointer;color:#bdefff;font-weight:700">What is SKYBOUND?</summary><p>SKYBOUND is an aircraft building and flying game. Draw a plane, tune its settings, fly in 3D and race AI pilots.</p></details>
+<details style="margin:6px 0"><summary style="cursor:pointer;color:#bdefff;font-weight:700">Can I design my own plane?</summary><p>Yes. Draw an outline in the workshop and experiment with the available wing and engine settings before flying.</p></details>
+<details style="margin:6px 0"><summary style="cursor:pointer;color:#bdefff;font-weight:700">Can I play without racing?</summary><p>Yes. Select Test flight for free flight, or choose Race for the checkpoint challenge.</p></details>
+<details style="margin:6px 0"><summary style="cursor:pointer;color:#bdefff;font-weight:700">What are the controls?</summary><p>Use W/S to pitch, A/D to turn, Q/E to roll, the arrow keys for throttle, Space for boost, Shift to brake, C to change camera, R to reset and Esc to return to the workshop.</p></details>
+<p style="margin:12px 0 0;color:#9cc">Play SKYBOUND in your browser and experiment with aircraft design, flight handling and air racing.</p>
+</section></div>
 <div id="vg" style="position:fixed;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,transparent 55%,#000a 100%)"></div>
 <div id="hud"><div class="pn" style="left:12px;top:12px" id="h1"></div><div class="pn" style="right:12px;top:12px;text-align:right" id="h2"></div>
 <div class="pn" style="left:50%;bottom:14px;transform:translateX(-50%);font-size:12px">W/S pitch | A/D turn | Q/E roll | Up/Down throttle | Space boost | Shift brake | C camera | R reset | Esc workshop</div><div id="big"></div></div>
