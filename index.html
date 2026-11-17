@@ -21,7 +21,7 @@ button.go{background:var(--or);color:#210;border-color:var(--or)}
 #msg{font-size:12px;color:#ffb020;min-height:16px}
 .bar{display:flex;align-items:center;font-size:11px;margin:3px 0}.bar span{width:78px;color:#9cc}.bar i{display:block;height:7px;border-radius:4px;background:linear-gradient(90deg,#35e0ff,#ffb020)}.bar div{flex:1;background:#12293b;border-radius:4px}
 #arch{font-size:15px;font-weight:700;color:var(--or);margin-top:8px}#tip{font-size:12px;color:#9fd;line-height:1.4}
-#hud{position:fixed;inset:0;pointer-events:none;display:none}
+#hud{position:fixed;inset:0;pointer-events:none;display:none}#soundToggle{position:absolute;top:68px;right:14px;pointer-events:auto;border:1px solid #55dfff;background:#08283dcc;color:#eafaff;border-radius:9px;padding:9px 13px;font-weight:800;cursor:pointer;backdrop-filter:blur(8px)}
 .pn{position:absolute;background:#08121ccc;border:1px solid var(--ac);border-radius:8px;padding:8px 12px;font:600 14px ui-monospace,monospace}
 #big{position:absolute;left:0;right:0;top:22%;text-align:center;font-size:72px;font-weight:800;color:var(--or);text-shadow:0 0 20px #000}
 
@@ -103,11 +103,11 @@ html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;backgrou
 <p style="margin:12px 0 0;color:#9cc">Play SKYBOUND in your browser and experiment with aircraft design, flight handling and air racing.</p>
 </section></div>
 <div id="vg" style="position:fixed;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at center,transparent 55%,#000a 100%)"></div>
-<div id="hud"><div class="pn" style="left:12px;top:12px" id="h1"></div><div class="pn" style="right:12px;top:12px;text-align:right" id="h2"></div>
+<div id="hud"><div class="pn" style="left:12px;top:12px" id="h1"></div><div class="pn" style="right:12px;top:12px;text-align:right" id="h2"></div><button id="soundToggle" type="button" aria-pressed="true">♫ SOUND ON</button>
 <div class="pn" style="left:50%;bottom:14px;transform:translateX(-50%);font-size:12px">W/S pitch | A/D turn | Q/E roll | Up/Down throttle | Space boost | Shift brake | C camera | R reset | Esc workshop</div><div id="big"></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const $=i=>document.getElementById(i),T=THREE;
+const $=i=>document.getElementById(i),T=THREE;\nlet audioCtx=null,engineOsc=null,engineGain=null,soundEnabled=true;\nfunction initAudio(){if(!soundEnabled)return;try{if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();engineOsc=audioCtx.createOscillator();engineGain=audioCtx.createGain();const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=650;engineOsc.type='sawtooth';engineOsc.frequency.value=75;engineGain.gain.value=0;engineOsc.connect(filter);filter.connect(engineGain);engineGain.connect(audioCtx.destination);engineOsc.start()}if(audioCtx.state==='suspended')audioCtx.resume()}catch(e){}}\nfunction tone(freq=440,duration=.16,kind='sine',volume=.12,slide=0){if(!soundEnabled)return;initAudio();if(!audioCtx)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain(),now=audioCtx.currentTime;o.type=kind;o.frequency.setValueAtTime(freq,now);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,freq+slide),now+duration);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(volume,now+.015);g.gain.exponentialRampToValueAtTime(.0001,now+duration);o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+duration+.02)}catch(e){}}\nfunction updateEngine(){if(!audioCtx||!engineOsc||!engineGain)return;const active=mode!=='build'&&soundEnabled,target=active?.018+.035*thr+.035*Math.min(1,V.length()/120):0;engineGain.gain.setTargetAtTime(target,audioCtx.currentTime,.12);engineOsc.frequency.setTargetAtTime(active?65+V.length()*1.9+thr*35:55,audioCtx.currentTime,.1)}\n$('soundToggle').addEventListener('click',()=>{soundEnabled=!soundEnabled;$('soundToggle').textContent=soundEnabled?'♫ SOUND ON':'♫ SOUND OFF';$('soundToggle').setAttribute('aria-pressed',String(soundEnabled));if(soundEnabled){initAudio();tone(660,.12)}else if(engineGain&&audioCtx)engineGain.gain.setTargetAtTime(0,audioCtx.currentTime,.04)});
 onerror=(m,u,l)=>{$('msg').textContent='Error: '+m+' (line '+l+')'};
 const R=new T.WebGLRenderer({canvas:$('gl'),antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;
 const S=new T.Scene(),HZ=new T.Color(0xbcd8f0);S.fog=new T.Fog(HZ,350,2800);
@@ -204,19 +204,19 @@ $('sv').onclick=()=>{try{localStorage.setItem('skybound',JSON.stringify({img:cv.
 $('ld').onclick=()=>{try{const d=JSON.parse(localStorage.getItem('skybound')||'null');if(!d){$('msg').textContent='Garage empty.';return}const im=new Image();im.onload=()=>{cx.clearRect(0,0,300,420);cx.drawImage(im,0,0);['sp','pw','di','hu'].forEach((k,i)=>$(k).value=d.v[i]);if(d.paint)$('paint').value=d.paint;if(d.map){$('mapSelect').value=d.map;setMap(d.map)}build();$('msg').textContent='Aircraft, paint and map loaded.'};im.src=d.img}catch(e){$('msg').textContent='Could not load this design.'}};
 // ---- game
 const k={},N=8,LAPS=2,V3=T.Vector3;let mode='build',q=new T.Quaternion(),P=new V3(),V=new V3(),thr=.55,cm=0,time=0,cdn=0,lap=0,gi=0,gates=[],gm=[],ai=[],rt=0,lastLap=0,done=false,fi={aoa:0},boostTimer=0,boostCooldown=0;
-addEventListener('keydown',e=>{const c=e.key.toLowerCase(),wasDown=!!k[c];if(c===' '&&!wasDown&&mode!=='build'&&boostCooldown<=0){boostTimer=2.4;boostCooldown=9}k[c]=1;if([' ','arrowup','arrowdown'].includes(c))e.preventDefault();if(c==='c')cm=(cm+1)%3;if(c==='r')respawn(0);if(c==='escape')toBuild()});
+addEventListener('keydown',e=>{const c=e.key.toLowerCase(),wasDown=!!k[c];if(!wasDown&&mode!=='build')initAudio();if(c===' '&&!wasDown&&mode!=='build'&&boostCooldown<=0){boostTimer=2.4;boostCooldown=9;tone(180,.55,'sawtooth',.19,760)}k[c]=1;if([' ','arrowup','arrowdown'].includes(c))e.preventDefault();if(c==='c')cm=(cm+1)%3;if(c==='r')respawn(0);if(c==='escape')toBuild()});
 addEventListener('keyup',e=>k[e.key.toLowerCase()]=0);
 const GP=i=>{const a=i*Math.PI*2/N,r=currentMap==='city'?620:currentMap==='islands'?430:currentMap==='desert'?560:520,x=Math.cos(a)*r,z=Math.sin(a)*r;return new V3(x,Math.max(H(x,z)+80,80),z)};
 function clearRace(){gm.forEach(m=>S.remove(m));ai.forEach(a=>S.remove(a.m));gm=[];ai=[];gates=[]}
 function toBuild(){mode='build';sl.visible=false;gl.visible=false;$('vg').style.opacity=0;clearRace();$('ui').style.display='';$('hud').style.display='none';clouds.visible=false;build()}
 function respawn(pen){if(mode==='build')return;const prev=mode==='race'?GP((gi+N-1)%N):new V3(0,120,0),nx=mode==='race'?gates[gi]:new V3(0,120,-100),d=nx.clone().sub(prev);d.y=0;d.normalize();
 P.copy(prev);P.y+=6;q.setFromUnitVectors(new V3(0,0,-1),d);V.copy(d).multiplyScalar(stat.vr>75?stat.vr:65);rt+=pen;thr=.65}
-function begin(m){try{if(!build())return;mode=m;clearRace();$('ui').style.display='none';$('hud').style.display='block';clouds.visible=true;sl.visible=true;gl.visible=true;$('big').textContent='';
+function begin(m){try{if(!build())return;initAudio();tone(520,.12);mode=m;clearRace();$('ui').style.display='none';$('hud').style.display='block';clouds.visible=true;sl.visible=true;gl.visible=true;$('big').textContent='';
 P.set(0,150,0);q.identity();V.set(0,0,-65);thr=.6;time=0;cdn=0;rt=0;lap=0;gi=0;done=false;lastLap=0;boostTimer=0;boostCooldown=0;
 if(m==='race'){for(let i=0;i<N;i++){gates.push(GP(i));const g=new T.Group(),r=new T.Mesh(new T.TorusGeometry(32,2.6,10,32),new T.MeshBasicMaterial({color:0x35e0ff})),d=new T.Mesh(new T.CircleGeometry(32,32),new T.MeshBasicMaterial({color:0x35e0ff,transparent:true,opacity:.1,side:T.DoubleSide,depthWrite:false}));g.add(r,d);g.position.copy(gates[i]);g.lookAt(GP(i+1));S.add(g);gm.push(g)}
 const st=GP(N-1).clone().lerp(gates[0],.5),d=gates[0].clone().sub(st);d.y=0;d.normalize();P.copy(st);P.y=100;q.setFromUnitVectors(new V3(0,0,-1),d);V.copy(d).multiplyScalar(65);const sd=new V3(-d.z,0,d.x);
 const botNames=["NOVA","MAVERICK","COMET","PHOENIX","VECTOR","ORBIT","FALCON","ZENITH","ROCKET"];for(let i=0;i<9;i++){const g=new T.Group(),mt=new T.MeshStandardMaterial({color:new T.Color().setHSL(i/9,.82,.55),metalness:.45,roughness:.28}),c=new T.Mesh(new T.ConeGeometry(.8,6,8),mt),wing=new T.Mesh(new T.BoxGeometry(8,.16,2.1),mt),tail=new T.Mesh(new T.BoxGeometry(3,.12,1),mt);c.rotation.x=-Math.PI/2;wing.position.z=.5;tail.position.set(0,.15,2.1);g.add(c,wing,tail);S.add(g);
-ai.push({m:g,name:botNames[i],p:st.clone().addScaledVector(sd,(i-4)*20).setY(100+i*3),gi:0,lap:0,sp:61+Math.random()*13})}cdn=3.99}}catch(e){mode='build';$('msg').textContent='Error: '+e.message}}
+ai.push({m:g,name:botNames[i],p:st.clone().addScaledVector(sd,(i-4)*20).setY(100+i*3),gi:0,lap:0,sp:61+Math.random()*13})}cdn=3.99;tone(880,.13);setTimeout(()=>tone(660,.13),450);setTimeout(()=>tone(880,.2),900)}}catch(e){mode='build';$('msg').textContent='Error: '+e.message}}
 $('tf').onclick=()=>begin('fly');$('rc').onclick=()=>begin('race');
 function enterGame(){document.body.classList.add('game-mode');$('landing').style.display='none';$('gl').style.display='block';$('ui').style.display='';build();window.scrollTo(0,0)}
 function returnHome(){toBuild();document.body.classList.remove('game-mode');$('landing').style.display='';$('gl').style.display='none';$('ui').style.display='none';window.scrollTo(0,0)}
@@ -245,16 +245,16 @@ const lift=9.8*(v/st.vr)**2*cl,drag=st.cdp*v*v*(1+br*3)*(1+Math.abs(aoa)*3)+st.k
 const a=new V3(Math.sin(time*.7+P.z*.01)*.8,-9.8,Math.cos(time*.5)*.5).addScaledVector(u,lift).addScaledVector(f,st.thrust*thr*bo);
 const vd=V.clone().normalize();a.addScaledVector(vd,-drag);V.addScaledVector(a,dt);
 const sp=V.length();if(sp>1)V.normalize().lerp(f,Math.min(1,dt*(1.2*Math.max(st.stab,.05)+.3))).normalize().multiplyScalar(sp);P.addScaledVector(V,dt);
-if(P.y<H(P.x,P.z)+1.5||P.y<.5){respawn(3);$('big').textContent='CRASH';setTimeout(()=>{if(cdn<=0)$('big').textContent=''},900)}return{aoa}}
+if(P.y<H(P.x,P.z)+1.5||P.y<.5){tone(95,.48,'sawtooth',.2,-55);respawn(3);$('big').textContent='CRASH';setTimeout(()=>{if(cdn<=0)$('big').textContent=''},900)}return{aoa}}
 let last=performance.now();
 function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/1000);last=now;time+=dt;
-dome.position.copy(cam.position);sunS.position.copy(cam.position).addScaledVector(SD,5000);
+dome.position.copy(cam.position);sunS.position.copy(cam.position).addScaledVector(SD,5000);updateEngine();
 if(mode==='build'){if(pg){pg.position.set(0,300,0);pg.quaternion.setFromEuler(new T.Euler(.35,time*.6,0))}if(prop)prop.rotation.z+=dt*30;cam.fov=50;cam.updateProjectionMatrix();cam.position.set(0,302,16);cam.lookAt(-3,300,0);sun.position.set(40,340,30);sun.target.position.set(0,300,0);R.render(S,cam);return}
 if(cdn>0){cdn-=dt;$('big').textContent=cdn>.99?Math.floor(cdn):'GO!';if(cdn<=0)$('big').textContent=''}
 else{fi=phys(dt);if(mode==='race'){rt+=dt;
 ai.forEach(a=>{const g=gates[a.gi],d=g.clone().sub(a.p),dist=d.length();d.normalize();a.p.addScaledVector(d,a.sp*dt);a.p.y=Math.max(a.p.y,H(a.p.x,a.p.z)+20);a.m.position.copy(a.p);a.m.lookAt(a.p.clone().sub(d));if(dist<45){a.gi++;if(a.gi>=N){a.gi=0;a.lap++}}});
-if(!done&&P.distanceTo(gates[gi])<42){gi++;if(gi>=N){gi=0;lap++;lastLap=rt}}
-if(lap>=LAPS&&!done){done=true;const place=1+ai.filter(a=>a.lap>=LAPS).length;$('big').textContent='FINISH P'+place+'  '+rt.toFixed(1)+'s';submitRaceTime(rt,place);setTimeout(toBuild,6500)}
+if(!done&&P.distanceTo(gates[gi])<42){tone(760,.09,'sine',.07);gi++;if(gi>=N){gi=0;lap++;lastLap=rt;tone(1040,.22,'triangle',.12)}}
+if(lap>=LAPS&&!done){done=true;tone(660,.22,'triangle',.16);setTimeout(()=>tone(880,.25,'triangle',.16),180);setTimeout(()=>tone(1100,.35,'triangle',.16),390);const place=1+ai.filter(a=>a.lap>=LAPS).length;$('big').textContent='FINISH P'+place+'  '+rt.toFixed(1)+'s';submitRaceTime(rt,place);setTimeout(toBuild,6500)}
 gm.forEach((m,i)=>m.children.forEach(c=>c.material.color.set(i===gi?0xffb020:0x35e0ff)))}}
 pg.position.copy(P);pg.quaternion.copy(q);prop.rotation.z+=dt*(10+thr*60);
 const f=new V3(0,0,-1).applyQuaternion(q),u=new V3(0,1,0).applyQuaternion(q);
