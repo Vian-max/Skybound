@@ -314,6 +314,6 @@ sun.position.copy(P).addScaledVector(SD,300);sun.target.position.copy(P);streaks
 R.render(S,cam);
 $('h1').innerHTML=`SPD ${(V.length()*3.6).toFixed(0)} km/h<br>ALT ${(P.y-H(P.x,P.z)).toFixed(0)} m<br>PWR ${(thr*100).toFixed(0)}%<br>BOOST ${boostTimer>0?'ACTIVE':boostCooldown>0?'COOLDOWN '+boostCooldown.toFixed(1)+'s':'READY'}<br>AOA ${(fi.aoa*57.3).toFixed(0)}&deg; ${fi.aoa>stat.aSt?'<b style=color:#f66>STALL</b>':''}<br>STALL SPD ~${(stat.vr*3.6*.8).toFixed(0)}`;
 if(mode==='race'){const sco=(l,g,p)=>(l*N+g)*1e4-p.distanceTo(gates[g]),me=sco(lap,gi,P);
-$('h2').innerHTML=`POS ${1+ai.filter(a=>sco(a.lap,a.gi,a.p)>me).length}/10<br>LAP ${Math.min(lap+1,LAPS)}/${LAPS}<br>GATE ${gi+1}/${N}<br>TIME ${rt.toFixed(1)}s<br>LAST ${lastLap.toFixed(1)}s`}else $('h2').innerHTML=`FREE FLIGHT<br>${$('arch').textContent}`}
+$('h2').innerHTML=`POS ${1+ai.filter(a=>sco(a.lap,a.gi,a.p)>me).length}/10<br>LAP ${Math.min(lap+1,LAPS)}/${LAPS}<br>GATE ${gi+1}/${N}<br>TIME ${rt.toFixed(1)}s<br>LAST ${lastLap.toFixed(1)}s<br>CLIMATE ${expertMode?weatherKind.toUpperCase():'STANDARD'}`}else $('h2').innerHTML=`FREE FLIGHT<br>${$('arch').textContent}<br>CLIMATE ${expertMode?weatherKind.toUpperCase():'STANDARD'}`}
 poly(D1);requestAnimationFrame(loop);
 </script></body></html>
