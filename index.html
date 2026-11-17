@@ -152,7 +152,6 @@ function buildMapDecor(){
  addInstanced(g,new T.DodecahedronGeometry(10,1),new T.MeshStandardMaterial({color:0x637b83,roughness:.9}),70,i=>{const x=(Math.random()-.5)*4000,z=(Math.random()-.5)*4000,y=H(x,z);return{x,y:y+5,z,sx:1+Math.random()*2,sy:.5+Math.random(),sz:1+Math.random()*2}});
  g=decorGroups.city;
  addInstanced(g,new T.BoxGeometry(1,1,1),new T.MeshStandardMaterial({color:0x273c60,metalness:.45,roughness:.35}),145,i=>{const x=(Math.random()-.5)*4200,z=(Math.random()-.5)*4200,h=35+Math.random()*210,w=20+Math.random()*38;return{x,y:H(x,z)+h/2,z,sx:w,sy:h,sz:w}});
- addInstanced(g,new T.BoxGeometry(1,1,1),new T.BoxGeometry(1,1,1),1,()=>({x:0,y:-10000,z:0}));
  addInstanced(g,new T.BoxGeometry(1,1,1),new T.MeshStandardMaterial({color:0x31dfff,emissive:0x087bba,emissiveIntensity:1.6}),90,i=>{const x=(Math.random()-.5)*4200,z=(Math.random()-.5)*4200,h=45+Math.random()*180;return{x,y:H(x,z)+h+1,z,sx:2,sy:2+Math.random()*8,sz:2}});
 }
 buildMapDecor();Object.entries(decorGroups).forEach(([k,g])=>g.visible=k==='alpine');
