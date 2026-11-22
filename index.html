@@ -49,6 +49,58 @@ html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;backgrou
 #accountModal{display:none;position:fixed;z-index:50;inset:0;background:#020812d9;backdrop-filter:blur(9px);align-items:center;justify-content:center;padding:18px}
 #accountModal.open{display:flex}.account-card{width:min(440px,100%);padding:26px;border:1px solid #32718a;border-radius:16px;background:linear-gradient(145deg,#102b3d,#071522);box-shadow:0 24px 80px #000b;color:#eafaff}
 .account-card h2{margin:0 0 8px;font-size:26px}.account-card p{color:#9bb8c9;font-size:13px;line-height:1.55}.account-card label{display:block;margin:14px 0 5px;color:#a9c6d5;font-size:12px}.account-card input{width:100%;padding:12px;background:#061522;border:1px solid #376278;border-radius:7px;color:#eafaff;font-size:14px}.account-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.account-actions button{margin:0}.account-close{float:right}.account-status{min-height:22px;color:#ffca68;font-size:12px;margin-top:12px}
+
+/* Premium SKYBOUND visual system — presentation only */
+:root{--ac:#58d9ff;--tx:#edf7ff;--or:#f3bd72}
+body{background:#050b14}
+#ui{background:linear-gradient(90deg,rgba(5,13,25,.97) 0%,rgba(7,18,33,.94) 78%,transparent 100%);backdrop-filter:blur(16px)}
+.game-brand{letter-spacing:.24em;text-shadow:0 0 22px #58d9ff38}
+.game-brand .brandmark{filter:drop-shadow(0 0 12px #58d9ff88)}
+.act{background:rgba(6,16,29,.92);backdrop-filter:blur(14px);border-bottom:1px solid #29465d}
+#cv{border:1px solid #58d9ff;border-radius:12px;box-shadow:0 0 0 1px #58d9ff20,0 14px 40px #0008}
+select,input[type=color],.pilot-entry input,.pilot-field input{background:#0a1a2b;border-color:#31536b;border-radius:9px}
+button{background:linear-gradient(145deg,#142d43,#0a1a2b);border-color:#37627d;border-radius:9px;transition:background .18s ease,border-color .18s ease,transform .18s ease,box-shadow .18s ease}
+button:hover{background:linear-gradient(135deg,#56d8f5,#218db8);border-color:#9cecff;color:#03111c;box-shadow:0 6px 22px #42c9f544;transform:translateY(-1px)}
+button.go,.nav-play,.primary-cta{background:linear-gradient(120deg,#ffe0a2,#e9a957 55%,#c9853c);border:1px solid #ffe2ae;color:#20170d!important;box-shadow:0 8px 28px #d99a4538}
+.bar i{background:linear-gradient(90deg,#54dfff,#7ba8ff 55%,#f1c17c)}
+.bar div{background:#13283b}
+#hud .pn{background:rgba(5,14,27,.76);border:1px solid #58d9ff88;box-shadow:0 8px 30px #0005;backdrop-filter:blur(12px)}
+#soundToggle{border-color:#58d9ff88;background:rgba(6,25,43,.78);box-shadow:0 8px 24px #0005}
+#big{color:#ffe0a2;text-shadow:0 4px 28px #000,0 0 34px #e8aa5b55}
+.landing{background:radial-gradient(ellipse at 78% 9%,#174b70 0,transparent 34%),radial-gradient(ellipse at 8% 65%,#102c49 0,transparent 38%),linear-gradient(145deg,#050d19 0%,#081626 48%,#0b1d30 100%)}
+.site-nav{border-bottom-color:#29445b}
+.site-logo img{filter:drop-shadow(0 0 12px #58d9ff66)}
+.site-logo small{color:#91afc5}
+.nav-links a:hover,.footer-links a:hover{color:#70e2ff}
+.eyebrow,.section-kicker{color:#73ddf4}
+.hero h1 span{background:linear-gradient(100deg,#8cecff,#49bde9 48%,#e9c28b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p,.section-intro{color:#b0c5d5}
+.secondary-cta{border-color:#45647d;background:#0c1b2a66;backdrop-filter:blur(8px)}
+.hero-art:before{background:radial-gradient(circle,#2784bd55 0,#143b5a55 48%,transparent 72%);border-color:#6ddfff55;box-shadow:0 0 110px #37bce533}
+.orbit{border-color:#73dfff66;box-shadow:0 0 25px #3ac5f322}
+.hero-plane{filter:drop-shadow(0 26px 34px #000b) drop-shadow(0 0 18px #55c9ed35)}
+.art-tag{background:rgba(7,20,34,.82);border-color:#4a7894;box-shadow:0 12px 38px #0007;backdrop-filter:blur(12px)}
+.feature-card,.leaderboard-wrap{border-color:#294b65;background:linear-gradient(145deg,rgba(17,43,65,.94),rgba(7,20,34,.96));box-shadow:0 14px 36px #0003}
+.feature-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.feature-card:hover{transform:translateY(-4px);border-color:#58c9e8;box-shadow:0 18px 42px #0005,0 0 24px #35bde51a}
+.feature-icon{background:linear-gradient(145deg,#164b68,#102b45);color:#8ceaff;border:1px solid #36718c}
+.feature-card h3,.landing-section h2{color:#f2f8ff}
+.feature-card p,.step p,.faq-grid details,.bottom-cta p{color:#a9bfd0}
+.step{border-top-color:#42647b}
+.step b{color:#eac28b}
+.controls-panel,.faq-grid details{border-color:#2b4c64;background:rgba(9,25,41,.88)}
+.control-row{border-bottom-color:#254054}
+.control-row kbd{background:#142f46;border-color:#41647b;color:#e9f8ff}
+.bottom-cta{border-color:#4b7891;background:radial-gradient(ellipse at 82% 0,#205477 0,transparent 54%),linear-gradient(145deg,#102b43,#091827);box-shadow:0 18px 50px #0004}
+.site-footer{border-top-color:#29445b}
+.leaderboard-table th{color:#8fc4db}.leaderboard-table td:first-child{color:#eac28b}
+.account-card{border-color:#47758e;background:linear-gradient(145deg,#142f47,#071522);box-shadow:0 28px 90px #000c}
+.account-card input{background:#071827;border-color:#42677e}
+body.pro-theme{--ac:#ff704f;--tx:#fff0e9;--or:#ffd17a}
+body.pro-theme #ui{background:linear-gradient(90deg,rgba(18,7,12,.98) 0%,rgba(32,10,15,.94) 78%,transparent 100%);backdrop-filter:blur(16px)}
+body.pro-theme .act{background:rgba(25,7,12,.94)}
+body.pro-theme #cv{box-shadow:0 0 30px #ff4a2533,0 16px 42px #0009}
+@media(prefers-reduced-motion:reduce){.feature-card,button{transition:none}.feature-card:hover,button:hover{transform:none}}
 </style>  <meta name="google-site-verification" content="uxBlUXi4iWHWRIh-Opv8n98FYRAgU1dJRO_kaOFVY6U" />
   <meta name="application-name" content="SKYBOUND">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
