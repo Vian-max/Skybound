@@ -339,6 +339,19 @@ function buildHighDetailWorlds(){
  function facade(items,rot){const m=new T.InstancedMesh(plane,glass,items.length);const o=new T.Object3D();items.forEach((v,i)=>{o.position.set(v.x,v.y,v.z);o.rotation.y=rot;o.scale.set((rot===Math.PI/2||rot===-Math.PI/2)?v.sz:v.sx,v.sy,1);o.updateMatrix();m.setMatrixAt(i,o.matrix)});m.instanceMatrix.needsUpdate=true;g.add(m)}
  facade(winFront,0);facade(winBack,Math.PI);facade(winLeft,-Math.PI/2);facade(winRight,Math.PI/2);
  addInstanced(g,new T.BoxGeometry(1,1,1),roofMat,roofUnits.length,i=>roofUnits[i]);
+ const facadeTrim=new T.MeshStandardMaterial({color:0x8aa1b2,metalness:.72,roughness:.28}),floorTrim=new T.MeshStandardMaterial({color:0x172b3b,metalness:.55,roughness:.4}),antennaMat=new T.MeshStandardMaterial({color:0x536b7a,metalness:.82,roughness:.24}),beaconMat=new T.MeshStandardMaterial({color:0xff493d,emissive:0xb51c17,emissiveIntensity:2});
+ const corners=[],bands=[],antenna=[];
+ buildings.forEach((b,i)=>{for(const sx of [-1,1])for(const sz of [-1,1])corners.push({x:b.x+sx*(b.w/2-.7),y:b.y,z:b.z+sz*(b.d/2-.7),sx:.9,sy:b.h,sz:.9});
+ for(let f=1;f<Math.floor(b.h/35);f++)bands.push({x:b.x,y:H(b.x,b.z)+f*35,z:b.z,sx:b.w+1.4,sy:.55,sz:b.d+1.4});
+ if(i%3===0)antenna.push({x:b.x+(Math.random()-.5)*5,y:H(b.x,b.z)+b.h+9,z:b.z+(Math.random()-.5)*5,sx:.35,sy:18,sz:.35});
+ });
+ addInstanced(g,new T.BoxGeometry(1,1,1),facadeTrim,corners.length,i=>corners[i]);
+ addInstanced(g,new T.BoxGeometry(1,1,1),floorTrim,bands.length,i=>bands[i]);
+ addInstanced(g,new T.CylinderGeometry(.22,.38,18,8),antennaMat,antenna.length,i=>antenna[i]);
+ addInstanced(g,new T.SphereGeometry(1,8,6),beaconMat,antenna.length,i=>({x:antenna[i].x,y:antenna[i].y+10,z:antenna[i].z,sx:1.1,sy:1.1,sz:1.1}));
+ const helipads=buildings.filter((b,i)=>i%11===0).slice(0,8);
+ addInstanced(g,new T.CylinderGeometry(9,9,.24,32),new T.MeshStandardMaterial({color:0x344c5a,metalness:.35,roughness:.6}),helipads.length,i=>({x:helipads[i].x,y:H(helipads[i].x,helipads[i].z)+helipads[i].h+.3,z:helipads[i].z,sx:1,sy:1,sz:1}));
+
  const warmWindows=winFront.filter((v,i)=>i%5===0),warm=new T.InstancedMesh(plane,litGlass,warmWindows.length),o=new T.Object3D();warmWindows.forEach((v,i)=>{o.position.set(v.x,v.y,v.z+.035);o.scale.set(v.sx,v.sy,1);o.updateMatrix();warm.setMatrixAt(i,o.matrix)});warm.instanceMatrix.needsUpdate=true;g.add(warm);
  const roadMat=new T.MeshStandardMaterial({color:0x101923,roughness:.96}),lineMat=new T.MeshStandardMaterial({color:0xc5b991,roughness:.8});
  addInstanced(g,new T.BoxGeometry(1,1,1),roadMat,14,i=>{const vertical=i%2===0,idx=Math.floor(i/2),pos=(idx-3)*155;return{x:vertical?pos:0,y:H(vertical?pos:0,vertical?0:pos)+.8,z:vertical?0:pos,sx:vertical?15:1800,sy:.5,sz:vertical?1800:15}});
