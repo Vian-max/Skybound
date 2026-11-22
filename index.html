@@ -415,7 +415,7 @@ cn+=pw*25*.06;cd+=pw*25;const cg=cn/cd,wc=WA>0?wn/WA:.5;for(const o of rows)tail
 const mass=A*.8+pw*30,Sw=WA+.45*fus,AR=mx*mx/Math.max(Sw,1),ar2=AR/(AR+2),stab=Math.max(-.5,Math.min(1.6,(wc-cg)*9+.6));
 const raw={mass,Sw,AR,ar2,wl:mass/Sw,am:A/mass,pa:(tail+.3*WA)/(mass*span),ra:Sw/(mass*mx),stab,cg,wc,A};
 if(!REF)REF=raw;const r=(a,b)=>raw[a]/REF[b||a],massRatio=mass/REF.mass,lightRacer=massRatio<.82,heavyFrame=massRatio>1.18;
-const wlR=r('wl'),CLa=Math.max(.15,r('ar2')),vr=68*Math.sqrt(wlR/Math.max(CLa,.4))*(heavyFrame?.82:lightRacer?1.1:1),thrust=26.5*pw*Math.pow(REF.mass/mass,.5)*(lightRacer?1.14:heavyFrame?1.03:1),cdp=.00155*r('am')*(lightRacer?.72:heavyFrame?1.32:1);
+const wlR=r('wl'),CLa=Math.max(.15,r('ar2')),vr=68*Math.sqrt(wlR/Math.max(CLa,.4))*(heavyFrame?.82:lightRacer?1.1:1),thrust=27.5*pw*Math.pow(REF.mass/mass,.5)*(lightRacer?1.14:heavyFrame?1.03:1),cdp=.00155*r('am')*(lightRacer?.72:heavyFrame?1.32:1);
 const ki=23.9*REF.AR/Math.max(AR,.3),vmax=Math.sqrt(thrust/cdp)*.97,balance=Math.max(-.5,Math.min(1.6,stab+(heavyFrame?.24:lightRacer?-.12:0)));
 const pa=Math.max(.25,Math.min(1.6,r('pa')*(lightRacer?1.15:heavyFrame?.82:1))),ra=Math.max(.25,Math.min(1.6,r('ra')*(lightRacer?1.25:heavyFrame?.88:1)));
 Object.assign(stat,{wlR,CLa,vr,thrust,cdp,ki,vmax,pa,ra,stab:balance,pw,massRatio,airframeClass:lightRacer?'LIGHT RACER':heavyFrame?'HEAVY LIFT':'BALANCED',aSt:Math.max(.22,Math.min(.5,.2+.5/(AR+.5))),AR});
