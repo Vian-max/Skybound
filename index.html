@@ -336,8 +336,8 @@ function buildHighDetailWorlds(){
  }
  addInstanced(g,new T.BoxGeometry(1,1,1),bmat,buildings.length,i=>{const b=buildings[i];return{x:b.x,y:b.y,z:b.z,sx:b.w,sy:b.h,sz:b.d}});
  const plane=new T.PlaneGeometry(1,1);
- function facade(items,rot){const m=new T.InstancedMesh(plane,glass,items.length);const o=new T.Object3D();items.forEach((v,i)=>{o.position.set(v.x,v.y,v.z);o.rotation.y=rot;o.scale.set(v.sx,v.sy,1);o.updateMatrix();m.setMatrixAt(i,o.matrix)});m.instanceMatrix.needsUpdate=true;g.add(m)}
- facade(winFront,0);facade(winBack,Math.PI);facade(winLeft,Math.PI/2);facade(winRight,-Math.PI/2);
+ function facade(items,rot){const m=new T.InstancedMesh(plane,glass,items.length);const o=new T.Object3D();items.forEach((v,i)=>{o.position.set(v.x,v.y,v.z);o.rotation.y=rot;o.scale.set((rot===Math.PI/2||rot===-Math.PI/2)?v.sz:v.sx,v.sy,1);o.updateMatrix();m.setMatrixAt(i,o.matrix)});m.instanceMatrix.needsUpdate=true;g.add(m)}
+ facade(winFront,0);facade(winBack,Math.PI);facade(winLeft,-Math.PI/2);facade(winRight,Math.PI/2);
  addInstanced(g,new T.BoxGeometry(1,1,1),roofMat,roofUnits.length,i=>roofUnits[i]);
  const warmWindows=winFront.filter((v,i)=>i%5===0),warm=new T.InstancedMesh(plane,litGlass,warmWindows.length),o=new T.Object3D();warmWindows.forEach((v,i)=>{o.position.set(v.x,v.y,v.z+.035);o.scale.set(v.sx,v.sy,1);o.updateMatrix();warm.setMatrixAt(i,o.matrix)});warm.instanceMatrix.needsUpdate=true;g.add(warm);
  const roadMat=new T.MeshStandardMaterial({color:0x101923,roughness:.96}),lineMat=new T.MeshStandardMaterial({color:0xc5b991,roughness:.8});
